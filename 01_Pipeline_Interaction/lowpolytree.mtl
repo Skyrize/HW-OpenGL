@@ -1,0 +1,16 @@
+newmtl lowpolytree:Bark
+illum 4
+Kd 0.18 0.05 0.02
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.02 0.01 0.00
+Ns 96.08
+newmtl lowpolytree:Leaves
+illum 4
+Kd 0.03 0.11 0.02
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.09 0.36 0.07
+Ns 96.08
