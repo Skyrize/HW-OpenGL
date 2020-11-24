@@ -30,7 +30,7 @@ public:
 	glm::vec3 GetRotationEuler();
 
 	void Translate(glm::vec3 translation);
-	void LookAt(glm::vec3 target);
+	void LookAt(glm::vec3 target, glm::vec3 up = glm::vec3(0,1,0));
 	void Rotate(glm::vec3 euler);
 	void RotateAround(glm::vec3 point, glm::vec3 axis, GLfloat angle);
 public:

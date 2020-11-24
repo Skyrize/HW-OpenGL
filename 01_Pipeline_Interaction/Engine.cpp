@@ -3,11 +3,15 @@
 #include "Entity.h"
 #include "Asset.h"
 #include "CameraController.h"
-#include "CameraDrone.h"
+#include "OrbitalMove.h"
 #include "CameraFPS.h"
 #include "DebugComponent.h"
+#include "CameraTarget.h"
 #include "RenderModule.h"
 #include "InstancedMesh.h"
+#include "PointLight.h"
+#include "DirectionalLight.h"
+#include <glm/common.hpp>
 
 Engine Engine::instance;
 
@@ -50,28 +54,43 @@ void Engine::Start()
 	Input::Get().Start();
 
 	Entity* cam = new Entity();
-	Entity* debug = new Entity();
-	Entity* cube = new Entity();
-	Entity* light = new Entity();
-
-	cub = cube;
-	cam->SetName("MainCamera");
-	cube->SetName("cube");
-	Camera *camera = cam->AddComponent<Camera>();
+	Camera* camera = cam->AddComponent<Camera>();
 	cam->AddComponent<CameraFPS>();
 	cam->AddComponent<CameraController>();
-	debug->AddComponent<DebugComponent>();
-	Mesh *mesh = cube->AddComponent<Mesh>();
-	mesh->LoadModel("Snowman.obj", "img.png");
-	Mesh* mesh2 = light->AddComponent<Mesh>();
-	mesh2->LoadModel("Moon.obj", "moon.jpg");
-	light->GetTransform()->SetPosition(glm::vec3(0, 3, 4));
-	cube->GetTransform()->SetScale(glm::vec3(0.2f));
-	cube->GetTransform()->SetPosition(glm::vec3(0, 1, 1));
-
+	cam->SetName("MainCamera");
+	//cam->AddComponent<OrbitalMove>()->SetTarget(glm::vec3(0, 2, 0));
 	entities.push_back(cam);
+	cam->GetTransform()->LookAt(glm::vec3(0, 0, 0));
+	cam->GetTransform()->SetPosition(glm::vec3(0, 0, 5));
+
+
+	Entity* debug = new Entity();
+	debug->AddComponent<DebugComponent>();
 	entities.push_back(debug);
+
+	Entity* cube = new Entity();
+	cub = cube;
+	cube->SetName("cube");
+	cam->AddComponent<CameraTarget>()->SetTarget(cube);
+	Mesh *mesh = cube->AddComponent<Mesh>();
+	mesh->LoadModel("Moon.obj", "mat0");
+	//cube->GetTransform()->SetScale(glm::vec3(1f));
+	//cube->GetTransform()->SetPosition(glm::vec3(0, 0, -5));
 	entities.push_back(cube);
+
+
+	Entity* light = new Entity();
+	light->SetName("light");
+	light->AddComponent<PointLight>()->SetIntensity(1);
+	//light->AddComponent<DirectionalLight>()->SetIntensity(.1f);
+	Mesh* mesh2 = light->AddComponent<Mesh>();
+	mesh2->LoadModel("Moon.obj", "mat2");
+	mesh2->GetTransform()->SetScale(glm::vec3(0.2f));
+	//light->AddComponent<OrbitalMove>()->SetTarget(glm::vec3(0, 3, 0));
+	light->GetTransform()->SetPosition(glm::vec3(5, 3, 0));
+	// Scale affect light ??
+
+	entities.push_back(light);
 
 	//mesh2->LoadTexture("Moon.jpg");
 
@@ -83,15 +102,16 @@ void Engine::Start()
 		float angle = i * 3.141593 * 2.0f / 8.0f;
 		glm::vec3 newPos(cos(angle) * radius, 0, sin(angle) * radius);
 		Mesh* m = test->AddComponent<Mesh>();
-		m->LoadModel("Snowman.obj", "img.png");
+		m->LoadModel("Snowman.obj", "mat0");
 		m->GetTransform()->SetPosition(newPos);
+		m->GetTransform()->SetScale(glm::vec3(0.2f));
 
 
 	}
 
 	Entity *instances = new Entity();
 	InstancedMesh* inst = instances->AddComponent<InstancedMesh>();
-	inst->LoadModel("lowpolytree.obj", "img2.png");
+	inst->LoadModel("lowpolytree.obj", "mat1");
 
 	for (float i = 0; i < 8; i++) {
 	
@@ -112,49 +132,10 @@ void Engine::Start()
 
 }
 
-GLfloat lightConstant = 1.0f;
-GLfloat lightLinear = 0.7f;
-GLfloat lightQuadratic = 1.8f;
-
-GLfloat ambientConst = 1.0;
-glm::vec3 ambientColour(1.0f, 1.0f, 1.0f);
-GLfloat diffuseConst = 1.0;
-glm::vec3 diffuseColour(1.0f, 1.0f, 1.0f);
-GLfloat specularConst = 1.0;
-glm::vec3 specularColour(1.0f, 1.0f, 1.0f);
-glm::vec3 rot(0);
-void RenderPointLight(Shader& shader)
-{
-	GLfloat		camX = sin(Time::Get().GetCurrentTime()) * 4 * 1;
-	GLfloat		camZ = cos(Time::Get().GetCurrentTime()) * 4 * 1;
-	shader.SetUniform1f("lightConstant", lightConstant);
-	shader.SetUniform1f("lightLinear", lightLinear);
-	shader.SetUniform1f("lightQuadratic", lightQuadratic);
-
-	shader.SetUniform1f("shininess", 32.0f);
-	shader.SetUniform4f("specularColour", specularColour, 1.0);
-	shader.SetUniform1f("specularConst", specularConst);
-	shader.SetUniform4f("diffuseColour", diffuseColour, 1.0);
-	shader.SetUniform1f("diffuseConst", diffuseConst);
-	shader.SetUniform4f("ambientColour", ambientColour, 1.0f);
-	shader.SetUniform1f("ambientConst", ambientConst);
-	shader.SetUniform4f("lightPosition", camX, 5.0f, camZ, 1.0f);
-	glm::vec3 viewPosition = RenderModule::Get().GetMainCamera()->GetTransform()->GetPosition();
-	shader.SetUniform4f("viewPosition", viewPosition.x, viewPosition.z, viewPosition.z, 1.0f);
-}
-
-glm::vec4 directionalLightDirection(0.0f, 0.0f, 1.0f, 0.0f);
-void RenderDirectionalLight(Shader& shader)
-{
-
-	shader.SetUniform4f("dirLightDirection", directionalLightDirection);
-}
-
 void Engine::Update()
 {
 
-	Shader &shader = RenderModule::Get().GetShader();
-
+	float rotY = 0;
 	do {										// run until the window is closed
 		Time::Get().Update();
 		Input::Get().Update();
@@ -163,19 +144,11 @@ void Engine::Update()
 			ent->Update();
 		}
 
-		RenderPointLight(shader);
-		RenderDirectionalLight(shader);
-
-		/// replace with component 
 		auto keyStatus = Input::Get().GetKeyStatus();
-		if (keyStatus[GLFW_KEY_LEFT])			rot.y += 0.05f;
-		if (keyStatus[GLFW_KEY_RIGHT])			rot.y -= 0.05f;
-		if (keyStatus[GLFW_KEY_UP])				directionalLightDirection.x += 0.05;
-		if (keyStatus[GLFW_KEY_DOWN])			directionalLightDirection.z -= 0.05f;
 		//glm::vec3 move(0);
-		//if (keyStatus[GLFW_KEY_LEFT])			move.x -= 0.05f;
-		//if (keyStatus[GLFW_KEY_RIGHT])			move.x += 0.05f;
-		//cub->GetTransform()->SetRotation(rot);
+		if (keyStatus[GLFW_KEY_LEFT])			rotY -= 5;
+		if (keyStatus[GLFW_KEY_RIGHT])			rotY += 5;
+		cub->GetTransform()->SetRotation(glm::vec3(0, rotY, 0));
 		//if (keyStatus[GLFW_KEY_KP_ADD])			modelPosition.z += 0.10f;
 		//if (keyStatus[GLFW_KEY_KP_SUBTRACT])	modelPosition.z -= 0.10f;
 		RenderModule::Get().Clear();
@@ -190,6 +163,12 @@ void Engine::Update()
 
 void Engine::End() {
 	RenderModule::Get().End();
+	Asset::Get().End();
+
+	for (Entity* ent : entities) {
+		delete(ent);
+	}
+
 	glfwTerminate();	// destroys all windows and releases resources.
 }
 

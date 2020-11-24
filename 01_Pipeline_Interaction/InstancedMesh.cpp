@@ -17,6 +17,7 @@ void InstancedMesh::Draw()
 	for (Transform* instance : instances) {
 		glm::mat4 modelMatrix = instance->GetModelMatrix();
 		shader.SetUniformMatrix4fv("model_matrix", modelMatrix);
+		this->material->Bind();
 		//glBindVertexArray(m_vertexArrayObject);
 		//texture.Bind();
 		//vertexArrayObject.Bind();

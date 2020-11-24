@@ -1,17 +1,26 @@
 #pragma once
-#include "Component.h"
+#include "Light.h"
+
 class PointLight :
-    public Component
+    public Light
 {
 protected:
-	GLfloat ambiantConstant = 1.0;
-	glm::vec3 ambiantColor = glm::vec3(1.0f, 1.0f, 1.0f);
-	GLfloat diffuseConstant = 1.0;
-	glm::vec3 diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
-	GLfloat specularConstant = 1.0;
-	glm::vec3 specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
-	GLfloat shininess = 32.0f;
+	//need to add other values ? 
+	GLfloat lightConstant = 1.0f;
+	GLfloat lightLinear = 0.7f;
+	GLfloat lightQuadratic = 1.8f;
 public:
-    PointLight(Entity& parent) : Component(parent) {};
+    PointLight(Entity& parent);
+    virtual void Bind(GLuint index) override;
+public:
+    GLfloat GetLightConstant() const;
+    void SetLightConstant(GLfloat lightConstant);
+
+    GLfloat GetLightLinear() const;
+    void SetLightLinear(GLfloat lightLinear);
+
+    GLfloat GetLightQuadratic() const;
+    void SetLightQuadratic(GLfloat lightQuadratic);
+
 };
 

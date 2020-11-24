@@ -5,6 +5,14 @@ Entity::Entity()
 	transform = new Transform(*this);
 }
 
+Entity::~Entity()
+{
+	delete(transform);
+	for (auto i = components.begin(); i != components.end(); i++) {
+		delete(i->second);
+	}
+}
+
 void Entity::Start()
 {
 	for (auto comp : this->components)

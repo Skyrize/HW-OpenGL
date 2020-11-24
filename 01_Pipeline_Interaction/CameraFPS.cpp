@@ -10,7 +10,9 @@ void CameraFPS::Start()
 	glfwSetInputMode(RenderModule::Get().GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	mainCamera = RenderModule::Get().GetMainCamera();
 	keyStatus = Input::Get().GetKeyStatus();
-	rotation = glm::vec3(0);
+	/*rotation = transform->GetRotationEuler();
+	rotation.z = 0;*/
+	rotation = glm::vec3(0, 0, 0);
 }
 
 void CameraFPS::Update()
@@ -18,14 +20,12 @@ void CameraFPS::Update()
 	rotation.x += Input::Get().GetMouseInput().y * sensitivity * Time::Get().GetDeltaTime();
 	rotation.y -= Input::Get().GetMouseInput().x * sensitivity * Time::Get().GetDeltaTime();
 
+	// std::cout << "before rot" << VTS(rotation) << std::endl;
 	if (rotation.x > 89.0f) rotation.x = 89.0f;
 	if (rotation.x < -89.0f) rotation.x = -89.0f;
 
 
-	std::cout << VTS(transform->GetRotationEuler()) << std::endl;
-	std::cout << VTS(rotation) << std::endl;
 	transform->SetRotation(rotation);
-	std::cout << VTS(transform->GetRotationEuler()) << std::endl;
 
 	//rotation.x += Input::Get().GetMouseInput().x * sensitivity * Time::Get().GetDeltaTime();
 	//rotation.y += Input::Get().GetMouseInput().y * sensitivity * Time::Get().GetDeltaTime();
@@ -40,7 +40,7 @@ void CameraFPS::Update()
 	////transform->SetFront(glm::normalize(direction));
 
 	//std::cout << "direction " << VTS(direction) << std::endl;
-	//std::cout << "rotation : " << VTS(this->rotation) << std::endl;
-	//std::cout << "transform rotation : " << VTS(transform->GetRotationEuler()) << std::endl << std::endl;
+	// std::cout << "rotation : " << VTS(this->rotation) << std::endl;
+	// std::cout << "transform rotation : " << VTS(transform->GetRotationEuler()) << std::endl << std::endl;
 
 }

@@ -16,8 +16,6 @@ void Transform::UpdateVectors()
  //   right = glm::normalize(glm::cross(front, glm::vec3(0, 1, 0)));
  //   up = glm::normalize(glm::cross(right, front));
 
-	//std::cout << "transform " + this->name + " : euler: " << VTS(eulerAngles) << " | front :" << VTS(front) << " | up :" << VTS(up) << " | right :" << VTS(right) << std::endl;
-	//std::cout << "transform2 " + this->name + " : euler: " << VTS(eulerAngles) << " | front :" << VTS(GetFront()) << " | up :" << VTS(GetUp()) << " | right :" << VTS(GetRight()) << std::endl << std::endl;
 }
 
 Transform::Transform(Entity& parent)
@@ -36,14 +34,8 @@ void Transform::Update()
 glm::mat4 Transform::GetModelMatrix()
 {
     glm::mat4 modelMatrix = GetTranslationMatrix();
-    //if (parent.GetName() == "cube")
-    //std::cout << "hein trans \n" << MTS(modelMatrix) << std::endl;
     modelMatrix *= GetRotationMatrix();
-    //if (parent.GetName() == "cube")
-    //std::cout << "hein trans + rot \n" << MTS(modelMatrix) << std::endl;
     modelMatrix *= GetScaleMatrix();
-    //if (parent.GetName() == "cube")
-    //std::cout << "hein trans + rot + scale \n" << MTS(modelMatrix) << std::endl;
 
 	return modelMatrix;
 }
@@ -71,8 +63,11 @@ glm::vec3 Transform::GetRotationEuler()
     glm::vec3 euler = glm::eulerAngles(this->rotation);
 
     euler.x = glm::degrees(euler.x);
-    euler.y = glm::degrees(euler.y);
-    euler.z = glm::degrees(euler.z);
+    if (euler.x < 0) euler.x += 360;
+	euler.y = glm::degrees(euler.y);
+	if (euler.y < 0) euler.y += 360;
+	euler.z = glm::degrees(euler.z);
+	if (euler.z < 0) euler.z += 360;
 	return euler;
 }
 
@@ -81,9 +76,17 @@ void Transform::Translate(glm::vec3 translation)
     this->position += translation;
 }
 
-void Transform::LookAt(glm::vec3 direction)
+void Transform::LookAt(glm::vec3 target, glm::vec3 up /*= glm::vec3(0, 1, 0)*/)
 {
-    this->SetRotation(direction * this->rotation);
+    glm::vec3 direction = target - position;
+	float length = glm::length(direction);
+
+    if (length <= 0.0001f) {
+        this->SetRotation(glm::quat(1, 0, 0, 0));
+        return;
+    }
+
+	this->SetRotation(glm::quatLookAt(glm::normalize(direction), up));
 }
 
 void Transform::Rotate(glm::vec3 euler)

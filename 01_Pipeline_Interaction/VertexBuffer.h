@@ -6,7 +6,6 @@ class VertexBuffer
 {
 private:
 	GLuint rendererID = 0;
-	static GLint binded;
 public:
 	VertexBuffer();
 	~VertexBuffer();

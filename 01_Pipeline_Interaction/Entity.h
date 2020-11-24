@@ -13,6 +13,7 @@ protected:
 
 public:
 	Entity();
+	~Entity();
 
 	template <typename T>
 	T *GetComponent()

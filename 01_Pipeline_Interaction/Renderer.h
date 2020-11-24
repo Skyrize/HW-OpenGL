@@ -6,20 +6,20 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "IndexBuffer.h"
+#include "Material.h"
 
 class Renderer :
     public Component, public IRender
 {
 protected:
 	//static const unsigned int NUM_BUFFERS = 4;
-	GLfloat textureID;
 	VertexArray vertexArrayObject;
 	VertexBuffer positionVertexBuffer;
 	VertexBuffer texcoordVertexBuffer;
 	VertexBuffer normalVertexBuffer;
-	VertexBuffer colorVertexBuffer;
-	VertexBuffer textureVertexBuffer;
 	IndexBuffer indicesVertexBuffer;
+
+	Material* material = nullptr;
 	//GLuint m_vertexArrayObject;
 	//GLuint m_vertexArrayBuffers[NUM_BUFFERS] = { 0 };
 	//unsigned int m_numIndices = 0;

@@ -32,7 +32,6 @@ void Camera::UpdateAspectRender(GLfloat newAspect)
 
 void Camera::Start()
 {
-    transform->SetRotation(glm::vec3(0, 0, 0));
 }
 
 void Camera::Update()

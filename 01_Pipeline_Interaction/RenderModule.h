@@ -3,7 +3,9 @@
 #include "IRender.h"
 #include "Camera.h"
 #include "Shader.h"
+#include "Light.h"
 #include <list>
+
 class RenderModule :
     public IObject, public IRender
 {
@@ -15,7 +17,8 @@ protected:
 	GLfloat					aspect = (GLfloat)windowWidth / (GLfloat)windowHeight;
 	Shader					shader;
 
-    std::list<IRender *> renderers;
+	std::list<IRender*> renderers;
+	std::list<Light*> lights;
 
 public:
 	RenderModule();
@@ -29,6 +32,8 @@ public:
 
 	void Register(IRender* newRenderer);
 	void Unregister(IRender* target);
+	void Register(Light* newLight);
+	void Unregister(Light* target);
 
 	GLFWwindow* GetWindow();
 	Camera* GetMainCamera();

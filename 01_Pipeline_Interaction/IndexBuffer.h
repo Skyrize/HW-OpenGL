@@ -5,7 +5,6 @@ class IndexBuffer
 private:
 	GLuint rendererID = 0;
 	GLuint count = 0;
-	static GLint binded;
 public:
 	IndexBuffer();
 	~IndexBuffer();

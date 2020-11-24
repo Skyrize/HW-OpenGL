@@ -11,10 +11,10 @@ private:
 	GLubyte* localBuffer = nullptr;
 	GLint width, height, BPP = 0;
 public:
+	Texture(const std::string& path, GLuint texID);
 	~Texture();
 
-	void Generate(const std::string &path, GLuint texID);
-	void Bind(GLuint slot = 0) const;
+	void Bind() const;
 	void Unbind() const;
 public:
     std::string GetFilePath() const;

@@ -19,6 +19,8 @@ void CameraController::Update()
 	if (keyStatus[GLFW_KEY_D])		movement += transform->GetRight() * speed * Time::Get().GetDeltaTime();
 	if (keyStatus[GLFW_KEY_SPACE])	movement += transform->GetUp() * speed * Time::Get().GetDeltaTime();
 	if (keyStatus[GLFW_KEY_Q])		movement -= transform->GetUp() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_F])			speed = glm::clamp(speed + 0.05f, 0.0f, 10.0f);
+	if (keyStatus[GLFW_KEY_G])			speed = glm::clamp(speed - 0.05f, 0.0f, 10.0f);
 	//std::cout << "movement = " << VTS(movement) << std::endl;
 	mainCamera->Move(movement);
 }

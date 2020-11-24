@@ -1,8 +1,6 @@
 #include "VertexArray.h"
 #include <iostream>
 
-GLint VertexArray::binded = -1;
-
 VertexArray::VertexArray()
 {
 }
@@ -19,15 +17,12 @@ void VertexArray::Generate()
 
 void VertexArray::Bind() const
 {
-	if (binded != rendererID)
-		glBindVertexArray(rendererID);
-	binded = rendererID;
+	glBindVertexArray(rendererID);
 }
 
 void VertexArray::Unbind() const
 {
 	glBindVertexArray(0);
-	binded = 0;
 }
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)

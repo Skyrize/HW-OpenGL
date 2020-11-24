@@ -47,8 +47,8 @@ int main()
 	}
 	catch (const std::exception& e)
 	{
-		Engine::Get().End();
 		std::cout << e.what() << std::endl;
+		Engine::Get().End();
 		return (84);
 	}
 	Engine::Get().End();

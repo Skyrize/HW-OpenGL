@@ -10,19 +10,21 @@
 #include "OBJLoader.h"
 #include "Texture.h"
 #include "IObject.h"
+#include "Material.h"
 
 class Asset : public IObject
 {
 private:
 	std::unordered_map<std::string, IndexedModel> models;
-	std::unordered_map<std::string, Texture *> textures;
+	std::unordered_map<std::string, Texture*> textures;
+	std::unordered_map<std::string, Material*> materials;
 
 public:
 	~Asset();
 	IndexedModel GetModel(const std::string& path);
-	GLfloat GetTexture(const std::string& path);
-	GLfloat GetTextureID(const std::string& path);
-
+	Texture* GetTexture(const std::string& path);
+	Material* GetMaterial(const std::string& name);
+	void AddMaterial(const std::string& name, const std::string &texturePath, const MaterialData &materialData);
 
 	static std::string ReadFile(std::string filePath);
 
@@ -41,5 +43,6 @@ public:
 	static Asset& Get() noexcept {
 		return instance;
 	}
+	void End();
 };
 

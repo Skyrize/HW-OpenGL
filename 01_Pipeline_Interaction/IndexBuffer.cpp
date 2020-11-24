@@ -1,7 +1,6 @@
 #include "IndexBuffer.h"
 #include "GL/glew.h"
 
-GLint IndexBuffer::binded = -1;
 IndexBuffer::IndexBuffer()
 {
 }
@@ -23,15 +22,12 @@ void IndexBuffer::Generate(const GLuint* data, GLuint count)
 
 void IndexBuffer::Bind() const
 {
-	if (binded != rendererID)
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererID);
-	binded = rendererID;
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererID);
 }
 
 void IndexBuffer::Unbind() const
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	binded = 0;
 }
 
 GLuint IndexBuffer::GetCount() const

@@ -1,6 +1,5 @@
 #include "VertexBuffer.h"
 
-GLint VertexBuffer::binded = -1;
 VertexBuffer::VertexBuffer()
 {
 }
@@ -19,13 +18,10 @@ void VertexBuffer::Generate(const void* data, GLuint size)
 
 void VertexBuffer::Bind() const
 {
-	if (binded != rendererID)
-		glBindBuffer(GL_ARRAY_BUFFER, rendererID);
-	binded = rendererID;
+	glBindBuffer(GL_ARRAY_BUFFER, rendererID);
 }
 
 void VertexBuffer::Unbind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	binded = 0;
 }

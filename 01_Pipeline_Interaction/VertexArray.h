@@ -5,7 +5,6 @@ class VertexArray
 {
 private:
 	GLuint rendererID = 0;
-	static GLint binded;
 public:
 	VertexArray();
 	~VertexArray();
