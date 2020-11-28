@@ -46,7 +46,6 @@ public:
 	void SetRotation(float eulerX, float eulerY, float eulerZ);
 
 	glm::vec3 GetFront() const;
-	void SetFront(glm::vec3 front);
 
     glm::vec3 GetUp() const;
 

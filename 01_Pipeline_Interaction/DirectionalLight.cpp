@@ -1,5 +1,6 @@
 #include "DirectionalLight.h"
 #include "RenderModule.h"
+#include "Transform.h"
 
 DirectionalLight::DirectionalLight(Entity& parent)
 	: Light(parent)
@@ -13,7 +14,7 @@ void DirectionalLight::Bind(GLuint index)
 	Shader& shader = RenderModule::Get().GetShader();
 	std::string i = "lights[" + std::to_string(index) + "].";
 
-	shader.SetUniform3f(i + "direction", direction);
+	shader.SetUniform3f(i + "direction", transform->GetFront());
 }
 
 glm::vec3 DirectionalLight::GetDirection() const

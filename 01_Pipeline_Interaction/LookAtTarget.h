@@ -2,14 +2,13 @@
 #include "Component.h"
 #include "Camera.h"
 
-class CameraTarget :
-    public Component
+class LookAtTarget :
+	public Component
 {
 private:
-	Camera* mainCamera = nullptr;
 	Entity* target = nullptr;
 public:
-	CameraTarget(Entity& parent) : Component(parent) {};
+	LookAtTarget(Entity& parent) : Component(parent) {};
 
 	virtual void Start() override;
 	virtual void Update() override;

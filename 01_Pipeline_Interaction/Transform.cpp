@@ -145,11 +145,6 @@ glm::vec3 Transform::GetFront() const
 	return this->rotation * glm::vec3(0, 0, -1);
 }
 
-void Transform::SetFront(glm::vec3 front)
-{
-	SetRotation(glm::lookAt(this->position, this->position + front, glm::vec3(0, 1, 0)));
-}
-
 glm::vec3 Transform::GetUp() const
 {
 	return this->rotation * glm::vec3(0, 1, 0);

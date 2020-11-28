@@ -25,7 +25,7 @@ public:
 	//Mesh(const std::string& fileName);
 	//Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
 
-	void LoadModel(const std::string& filename, const std::string& texture);
+	void LoadModel(const std::string& filename, const std::string& material);
 	//void LoadTexture(const std::string& filename);
 	virtual void Start() override;
 	virtual void Update() override;

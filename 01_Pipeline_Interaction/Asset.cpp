@@ -1,5 +1,7 @@
 #include "Asset.h"
 #include "RenderModule.h"
+#include <iostream>
+#include <filesystem>
 
 #include <stb_image.h>
 
@@ -29,7 +31,7 @@ IndexedModel Asset::GetModel(const std::string& path)
 	if (models.find(path) != models.end()) {
 		return models[path];
 	}
-	models[path] = OBJModel(path).ToIndexedModel();
+	models[path] = OBJModel(MODEL_PATH + path).ToIndexedModel();
 	return models[path];
 }
 
@@ -96,12 +98,24 @@ void GenerateTexture(const std::string& path, GLint zoffset)
 	}
 }
 
-void Asset::Start()
+void Asset::PreloadAssets()
 {
 	MaterialData defaultData = MaterialData::GetMaterial("ruby");
-	AddMaterial("mat0", "img.png", defaultData);
-	AddMaterial("mat1", "img2.png", defaultData);
-	AddMaterial("mat2", "Moon.jpg", defaultData);
+	//MaterialData defaultData;
+
+	for (const auto& entry : std::filesystem::directory_iterator(TEXTURE_PATH)) {
+		std::string name = entry.path().filename().string();
+		size_t lastindex = name.find_last_of(".");
+		string rawname = name.substr(0, lastindex);
+		std::string path = entry.path().string();
+		AddMaterial(rawname, path, defaultData);
+	}
+
+}
+
+void Asset::Start()
+{
+	PreloadAssets();
 }
 
 void Asset::Update()

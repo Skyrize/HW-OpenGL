@@ -6,7 +6,7 @@ enum class LightType
 {
     DIRECTIONAL = 0,
     POINT = 1,
-    //SPOT = 2,
+    SPOT = 2,
     //AREA = 3?
 
 };

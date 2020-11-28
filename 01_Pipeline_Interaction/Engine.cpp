@@ -6,12 +6,14 @@
 #include "OrbitalMove.h"
 #include "CameraFPS.h"
 #include "DebugComponent.h"
-#include "CameraTarget.h"
+#include "LookAtTarget.h"
 #include "RenderModule.h"
 #include "InstancedMesh.h"
 #include "PointLight.h"
+#include "SpotLight.h"
 #include "DirectionalLight.h"
 #include <glm/common.hpp>
+#include "DebugController.h"
 
 Engine Engine::instance;
 
@@ -45,6 +47,7 @@ void Engine::Init()
 }
 
 Entity* cub = nullptr;
+SpotLight* spotLight = nullptr;
 
 void Engine::Start()
 {
@@ -71,26 +74,48 @@ void Engine::Start()
 	Entity* cube = new Entity();
 	cub = cube;
 	cube->SetName("cube");
-	cam->AddComponent<CameraTarget>()->SetTarget(cube);
+	//cam->AddComponent<LookAtTarget>()->SetTarget(cube);
 	Mesh *mesh = cube->AddComponent<Mesh>();
-	mesh->LoadModel("Moon.obj", "mat0");
-	//cube->GetTransform()->SetScale(glm::vec3(1f));
-	//cube->GetTransform()->SetPosition(glm::vec3(0, 0, -5));
+	mesh->LoadModel("Moon.obj", "white");
+	cube->GetTransform()->SetScale(glm::vec3(0.2f));
 	entities.push_back(cube);
 
 
 	Entity* light = new Entity();
 	light->SetName("light");
-	light->AddComponent<PointLight>()->SetIntensity(1);
-	//light->AddComponent<DirectionalLight>()->SetIntensity(.1f);
+	spotLight = light->AddComponent<SpotLight>();
+	spotLight->SetInnerAngle(30.0f);
+	spotLight->SetIntensity(1.0f);
+	light->AddComponent<LookAtTarget>()->SetTarget(cube);
+	//light->AddComponent<PointLight>();
+	light->AddComponent<DebugController>();
+	//auto dr = light->AddComponent<DirectionalLight>();
 	Mesh* mesh2 = light->AddComponent<Mesh>();
-	mesh2->LoadModel("Moon.obj", "mat2");
+	mesh2->LoadModel("Snowman.obj", "Moon");
 	mesh2->GetTransform()->SetScale(glm::vec3(0.2f));
+	mesh2->GetTransform()->SetRotation(-45, 45, 0);
 	//light->AddComponent<OrbitalMove>()->SetTarget(glm::vec3(0, 3, 0));
-	light->GetTransform()->SetPosition(glm::vec3(5, 3, 0));
+	light->GetTransform()->SetPosition(glm::vec3(3, 3, 0));
 	// Scale affect light ??
-
 	entities.push_back(light);
+
+	//Entity* light2 = new Entity();
+	//light2->SetName("light2");
+	//auto l = light2->AddComponent<PointLight>();
+	//l->SetIntensity(2);
+	//l->SetColor(Color(0, 0, 1));
+	//light2->AddComponent<DebugController>();
+	////light2->AddComponent<DirectionalLight>()->SetIntensity(1);
+	//Mesh* mesh3 = light2->AddComponent<Mesh>();
+	//mesh3->LoadModel("Moon.obj", "Moon");
+	//mesh3->GetTransform()->SetScale(glm::vec3(0.4f));
+	//auto or = light2->AddComponent<OrbitalMove>();
+	//or->SetTarget(glm::vec3(0, 4, 0));
+	//or->SetSpeed(-1);
+	////light2->GetTransform()->SetPosition(glm::vec3(2, 3, 0));
+	//// Scale affect light2 ??
+	//entities.push_back(light2);
+
 
 	//mesh2->LoadTexture("Moon.jpg");
 
@@ -102,7 +127,7 @@ void Engine::Start()
 		float angle = i * 3.141593 * 2.0f / 8.0f;
 		glm::vec3 newPos(cos(angle) * radius, 0, sin(angle) * radius);
 		Mesh* m = test->AddComponent<Mesh>();
-		m->LoadModel("Snowman.obj", "mat0");
+		m->LoadModel("Snowman.obj", "img");
 		m->GetTransform()->SetPosition(newPos);
 		m->GetTransform()->SetScale(glm::vec3(0.2f));
 
@@ -111,7 +136,7 @@ void Engine::Start()
 
 	Entity *instances = new Entity();
 	InstancedMesh* inst = instances->AddComponent<InstancedMesh>();
-	inst->LoadModel("lowpolytree.obj", "mat1");
+	inst->LoadModel("lowpolytree.obj", "white");
 
 	for (float i = 0; i < 8; i++) {
 	
@@ -134,7 +159,7 @@ void Engine::Start()
 
 void Engine::Update()
 {
-
+	float angle = 30;
 	float rotY = 0;
 	do {										// run until the window is closed
 		Time::Get().Update();
@@ -146,9 +171,13 @@ void Engine::Update()
 
 		auto keyStatus = Input::Get().GetKeyStatus();
 		//glm::vec3 move(0);
-		if (keyStatus[GLFW_KEY_LEFT])			rotY -= 5;
-		if (keyStatus[GLFW_KEY_RIGHT])			rotY += 5;
-		cub->GetTransform()->SetRotation(glm::vec3(0, rotY, 0));
+		//if (keyStatus[GLFW_KEY_LEFT])			rotY -= 5;
+		//if (keyStatus[GLFW_KEY_RIGHT])			rotY += 5;
+		if (keyStatus[GLFW_KEY_LEFT])			angle -= 0.05f;
+		if (keyStatus[GLFW_KEY_RIGHT])			angle += 0.05f;
+		spotLight->SetOuterAngle(angle);
+		std::cout << "angle deg " << std::to_string(angle) << "//// angle rad " << std::to_string(glm::radians(angle)) << std::endl;
+		//cub->GetTransform()->SetRotation(glm::vec3(0, rotY, 0));
 		//if (keyStatus[GLFW_KEY_KP_ADD])			modelPosition.z += 0.10f;
 		//if (keyStatus[GLFW_KEY_KP_SUBTRACT])	modelPosition.z -= 0.10f;
 		RenderModule::Get().Clear();

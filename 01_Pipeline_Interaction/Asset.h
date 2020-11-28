@@ -12,6 +12,9 @@
 #include "IObject.h"
 #include "Material.h"
 
+#define MODEL_PATH "Assets/Models/"
+#define TEXTURE_PATH "Assets/Textures/"
+
 class Asset : public IObject
 {
 private:
@@ -28,6 +31,7 @@ public:
 
 	static std::string ReadFile(std::string filePath);
 
+	void PreloadAssets();
 	virtual void Start() override;
 	virtual void Update() override;
 
