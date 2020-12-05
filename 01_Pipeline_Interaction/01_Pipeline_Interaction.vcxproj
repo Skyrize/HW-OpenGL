@@ -143,9 +143,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Asset.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="AnimationClip.cpp" />
     <ClCompile Include="DebugController.cpp" />
     <ClCompile Include="OrbitalMove.cpp" />
     <ClCompile Include="CameraFPS.cpp" />
@@ -178,9 +180,11 @@
     <ClCompile Include="VertexBufferLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Asset.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="DebugController.h" />
     <ClInclude Include="OrbitalMove.h" />
     <ClInclude Include="CameraFPS.h" />

@@ -20,6 +20,7 @@ private:
 	void UpdateVectors();
 public:
 	Transform(Entity& parent);
+	Transform(glm::vec3 position, glm::vec3 rotationEuler, glm::vec3 scale);
 	virtual void Start() override;
 	virtual void Update() override;
 

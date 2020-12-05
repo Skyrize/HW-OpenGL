@@ -23,6 +23,14 @@ Transform::Transform(Entity& parent)
 {
 }
 
+Transform::Transform(glm::vec3 position, glm::vec3 rotationEuler, glm::vec3 scale)
+    :Component(Entity())
+{
+    this->SetPosition(position);
+    this->SetScale(scale);
+    this->SetRotation(rotationEuler);
+}
+
 void Transform::Start()
 {
 }

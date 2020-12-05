@@ -13,6 +13,7 @@
 #include "SpotLight.h"
 #include "DirectionalLight.h"
 #include <glm/common.hpp>
+#include "Animation.h"
 #include "DebugController.h"
 
 Engine Engine::instance;
@@ -70,6 +71,7 @@ void Engine::Start()
 	Entity* debug = new Entity();
 	debug->AddComponent<DebugComponent>();
 	entities.push_back(debug);
+	debug->SetName("debug");
 
 	Entity* cube = new Entity();
 	cub = cube;
@@ -78,6 +80,9 @@ void Engine::Start()
 	Mesh *mesh = cube->AddComponent<Mesh>();
 	mesh->LoadModel("Moon.obj", "white");
 	cube->GetTransform()->SetScale(glm::vec3(0.2f));
+	auto anim = cub->AddComponent<Animation>();
+	anim->AddClip(Clip("test", 5, Transform(glm::vec3(0), glm::vec3(0), glm::vec3(0.2f)), Transform(glm::vec3(0, 5, 5), glm::vec3(90), glm::vec3(1))));
+	anim->AddClip(Clip("test2", 1, Transform(glm::vec3(0, 5, 5), glm::vec3(90), glm::vec3(1)), Transform(glm::vec3(0), glm::vec3(0), glm::vec3(0.2f))));
 	entities.push_back(cube);
 
 
@@ -123,7 +128,7 @@ void Engine::Start()
 	for (float i = 0; i < 8; i++)
 	{
 		Entity* test = new Entity();
-
+		test->SetName("test " + std::to_string(i));
 		float angle = i * 3.141593 * 2.0f / 8.0f;
 		glm::vec3 newPos(cos(angle) * radius, 0, sin(angle) * radius);
 		Mesh* m = test->AddComponent<Mesh>();
@@ -135,6 +140,7 @@ void Engine::Start()
 	}
 
 	Entity *instances = new Entity();
+	instances->SetName("instances");
 	InstancedMesh* inst = instances->AddComponent<InstancedMesh>();
 	inst->LoadModel("lowpolytree.obj", "white");
 
@@ -175,6 +181,9 @@ void Engine::Update()
 		//if (keyStatus[GLFW_KEY_RIGHT])			rotY += 5;
 		if (keyStatus[GLFW_KEY_LEFT])			angle -= 0.05f;
 		if (keyStatus[GLFW_KEY_RIGHT])			angle += 0.05f;
+		if (keyStatus[GLFW_KEY_Y])			cub->GetComponent<Animation>()->Play("test");
+		if (keyStatus[GLFW_KEY_T
+		])			cub->GetComponent<Animation>()->Play("test2");
 		spotLight->SetOuterAngle(angle);
 		std::cout << "angle deg " << std::to_string(angle) << "//// angle rad " << std::to_string(glm::radians(angle)) << std::endl;
 		//cub->GetTransform()->SetRotation(glm::vec3(0, rotY, 0));
