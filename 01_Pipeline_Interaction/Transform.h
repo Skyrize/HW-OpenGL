@@ -44,6 +44,7 @@ public:
     void SetScale(glm::vec3 scale);
 
 	glm::quat GetRotation() const;
+	glm::quat GetWorldRotation() const;
 	void SetRotation(glm::quat rotation);
 	void SetRotation(glm::vec3 eulerAngles);
 	void SetRotation(float eulerX, float eulerY, float eulerZ);

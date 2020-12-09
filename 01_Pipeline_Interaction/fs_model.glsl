@@ -10,6 +10,7 @@ in VS_OUT
 } fs_in;
 
 struct Light {
+	bool enabled;
 	int type;
 	vec3 position;
 	vec3 direction;
@@ -23,7 +24,7 @@ struct Light {
 #define SPOT_LIGHT 2
 #define AREA_LIGHT 3
 
-#define LIGHTS 2
+#define LIGHTS 3
 uniform Light lights[LIGHTS];
 
 struct Material {
@@ -95,6 +96,8 @@ void main(void){
 	vec3 specularTotal;
 	
 	for (int i = 0; i != LIGHTS; i++) {
+		if (!lights[i].enabled)
+			continue;
 		vec4 direction;
 		if (lights[i].type == DIRECTIONAL_LIGHT) {
 			direction = normalize(-vec4(lights[i].direction, 0));

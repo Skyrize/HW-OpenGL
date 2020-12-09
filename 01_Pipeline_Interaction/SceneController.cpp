@@ -16,6 +16,9 @@ void SceneController::Start()
 	camTransform = mainCamera->GetTransform();
 	animated = Engine::Get().GetEntitiesByTag("Animate");
 	arrowTransform = Engine::Get().GetEntity("Arrow")->GetTransform();
+	sLight = Engine::Get().GetEntity("spotLight")->GetComponent<SpotLight>();
+	dLight = Engine::Get().GetEntity("dirLight")->GetComponent<DirectionalLight>();
+	pLight = Engine::Get().GetEntity("pointLight")->GetComponent<PointLight>();
 
 	for (auto anim : animated) {
 		auto childs = anim->GetChilds();
@@ -223,6 +226,16 @@ void SceneController::Update()
 		break;
 	default:
 		break;
+	}
+
+	if (keyStatus[GLFW_KEY_F] == KeyStatus::RELEASED) {
+		dLight->SetActive(!dLight->IsActive());
+	}
+	if (keyStatus[GLFW_KEY_G] == KeyStatus::RELEASED) {
+		pLight->SetActive(!pLight->IsActive());
+	}
+	if (keyStatus[GLFW_KEY_H] == KeyStatus::RELEASED) {
+		sLight->SetActive(!sLight->IsActive());
 	}
 
 }

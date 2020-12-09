@@ -54,13 +54,27 @@ void Engine::LoadScene()
 	scene->AddComponent<SceneController>();
 	entities.push_back(scene);
 
-	Entity* light = new Entity(cam);
-	//light->AddComponent<Mesh>()->LoadModel("Snowglobe.obj", "Bricks");
-	light->SetName("light");
-	light->AddComponent<PointLight>()->SetIntensity(4);
-	light->GetTransform()->SetPosition(0, 0, -6);
-	light->GetTransform()->SetScale(glm::vec3(0.2f));
-	entities.push_back(light);
+	Entity* pointLight = new Entity();
+	pointLight->SetName("pointLight");
+	pointLight->AddComponent<PointLight>()->SetIntensity(5);
+	pointLight->GetTransform()->SetPosition(glm::vec3(13, 18.5, -27));
+	entities.push_back(pointLight);
+
+	Entity* DirLight = new Entity();
+	DirLight->SetName("dirLight");
+	DirLight->AddComponent<DirectionalLight>()->SetIntensity(2.5f);
+	DirLight->GetTransform()->SetRotation(glm::vec3(-75, -30, 0));
+	entities.push_back(DirLight);
+
+	Entity* spotLight = new Entity(cam);
+	spotLight->SetName("spotLight");
+	auto spot = spotLight->AddComponent<SpotLight>();
+	spot->SetIntensity(4);
+	spot->SetInnerAngle(30);
+	spot->SetOuterAngle(37.5f);
+	spotLight->GetTransform()->SetPosition(0, 0, -6);
+	spotLight->GetTransform()->SetScale(glm::vec3(2.0f));
+	entities.push_back(spotLight);
 
 
 	/*--debug--*/
@@ -200,7 +214,6 @@ void Engine::LoadScene()
 	Entity* room = new Entity();
 	room->SetName("Room");
 	room->AddComponent<Mesh>()->LoadModel("Room.obj", "Bricks");
-	room->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	entities.push_back(room);
 
 	/*--Floor--*/

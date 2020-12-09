@@ -90,10 +90,8 @@ void RenderModule::Draw()
 	//RenderDirectionalLight(shader);
 	int i = 0;
 	for (auto light : lights) {
-		if (light->IsActive()) {
-			light->Bind(i);
-			i++;
-		}
+		light->Bind(i);
+		i++;
 	}
 
 

@@ -17,6 +17,7 @@ void Light::Bind(GLuint index)
 	Shader& shader = RenderModule::Get().GetShader();
 	std::string i = "lights[" + std::to_string(index) + "].";
 
+	shader.SetUniform1i(i + "enabled", this->isActive);
 	shader.SetUniform1i(i + "type", (GLint)this->type);
 	shader.SetUniform1f(i + "intensity", this->intensity);
 	shader.SetUniform3f(i + "color", this->color);

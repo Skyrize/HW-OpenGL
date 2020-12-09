@@ -150,6 +150,15 @@ glm::quat Transform::GetRotation() const
     return rotation;
 }
 
+glm::quat Transform::GetWorldRotation() const
+{
+    glm::mat4 modelMatrix = GetModelMatrix();
+    float wScale = sqrt(modelMatrix[0][0] * modelMatrix[0][0] + modelMatrix[0][1] * modelMatrix[0][1] + modelMatrix[0][2] * modelMatrix[0][2]);
+    glm::mat3 rot = (1.0f / wScale) * glm::mat3(modelMatrix);
+
+    return glm::quat(rot);
+}
+
 void Transform::SetRotation(glm::quat rotation)
 {
     this->rotation = glm::normalize(rotation);
@@ -168,15 +177,15 @@ void Transform::SetRotation(float eulerX, float eulerY, float eulerZ)
 
 glm::vec3 Transform::GetFront() const
 {
-	return this->rotation * glm::vec3(0, 0, -1);
+	return GetWorldRotation() * glm::vec3(0, 0, -1);
 }
 
 glm::vec3 Transform::GetUp() const
 {
-	return this->rotation * glm::vec3(0, 1, 0);
+	return GetWorldRotation() * glm::vec3(0, 1, 0);
 }
 
 glm::vec3 Transform::GetRight() const
 {
-	return this->rotation * glm::vec3(1, 0, 0);
+    return GetWorldRotation() * glm::vec3(1, 0, 0);
 }

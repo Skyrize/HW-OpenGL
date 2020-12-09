@@ -7,6 +7,9 @@
 #include "Transform.h"
 #include "LookAtTarget.h"
 #include "AnimationClip.h"
+#include "SpotLight.h"
+#include "DirectionalLight.h"
+#include "PointLight.h"
 
 enum class SceneState
 {
@@ -30,6 +33,9 @@ private:
     CameraController* camController = nullptr;
     Transform* camTransform = nullptr;
     Transform* arrowTransform = nullptr;
+    SpotLight* sLight = nullptr;
+    DirectionalLight* dLight = nullptr;
+    PointLight* pLight = nullptr;
     Camera* mainCamera = nullptr;
     std::vector<Entity*> animated;
     int currentAnimated = 0;
