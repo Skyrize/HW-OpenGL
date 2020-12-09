@@ -1,5 +1,3 @@
-![Render](https://github.com/Skyrize/HW_OpenGL/blob/main/render.png)
-
 # Inputs
 ## General
 - F : Toggle directionnal Light
@@ -24,3 +22,7 @@
 - Arrows : rotate model
 - S / D : Deconstruct next model part
 - Space : Go back in Focus Mode
+
+# Maya Render 
+![Render](https://github.com/Skyrize/HW_OpenGL/blob/main/render.png)
+
