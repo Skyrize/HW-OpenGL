@@ -69,7 +69,7 @@ void Engine::LoadScene()
 	Entity* spotLight = new Entity(cam);
 	spotLight->SetName("spotLight");
 	auto spot = spotLight->AddComponent<SpotLight>();
-	spot->SetIntensity(4);
+	spot->SetIntensity(2);
 	spot->SetInnerAngle(30);
 	spot->SetOuterAngle(37.5f);
 	spotLight->GetTransform()->SetPosition(0, 0, -6);

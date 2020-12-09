@@ -14,25 +14,6 @@ struct MaterialData {
 	GLfloat shininess = 32.0f;
 	GLfloat transparency = 1.0f;
 
-	//MaterialData(const MaterialData &ref)
-	//{
-	//	ambient = ref.ambient;
-	//	diffuse = ref.diffuse;
-	//	specular = ref.specular;
-	//	shininess = ref.shininess;
-	//}
-
-	//MaterialData()
-	//{}
-
-	//MaterialData(const Color& ia, const Color& id, const Color& is, GLfloat kshi)
-	//{
-	//	ambient = ia;
-	//	diffuse = id;
-	//	specular = is;
-	//	shininess = kshi;
-	//}
-
 	static MaterialData GetMaterial(const std::string& name)
 	{
 		static const std::map<std::string, MaterialData> materials = {
