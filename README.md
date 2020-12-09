@@ -1,3 +1,5 @@
+![Render](https://github.com/Skyrize/HW_OpenGL/blob/main/render.png)
+
 # Inputs
 ## General
 - F : Toggle directionnal Light
