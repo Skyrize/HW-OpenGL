@@ -15,11 +15,12 @@ protected:
 public:
 	Engine();
 	void Init();
+	void LoadScene();
 	virtual void Start() override;
 	virtual void Update() override;
 	void End();
 	Entity* GetEntity(const std::string& name);
-
+	std::vector<Entity*> GetEntitiesByTag(const std::string tag);
 
 	void HintsGLFW();
 

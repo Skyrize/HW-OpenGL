@@ -71,6 +71,7 @@ void Mesh::Draw()
 
 	//todo refacto shader materials
 	shader.SetUniformMatrix4fv("model_matrix", modelMatrix);
+	shader.SetUniform1i("outlined", outlined);
 
 	vertexArrayObject.Bind();
 	material->Bind();
@@ -78,5 +79,16 @@ void Mesh::Draw()
 	//glDrawElementsBaseVertex(GL_TRIANGLES, m_numIndices, GL_UNSIGNED_INT, 0, 0);
 
 	vertexArrayObject.Unbind();
+}
+
+
+bool Mesh::GetOutlined() const
+{
+    return outlined;
+}
+
+void Mesh::SetOutlined(bool outlined)
+{
+    this->outlined = outlined;
 }
 

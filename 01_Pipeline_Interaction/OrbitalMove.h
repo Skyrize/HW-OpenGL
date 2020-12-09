@@ -1,11 +1,12 @@
 #pragma once
 #include "Component.h"
 #include "Camera.h"
+#include "Input.h"
 
 class OrbitalMove :
     public Component
 {
-    GLboolean* keyStatus = nullptr;
+    KeyStatus* keyStatus = nullptr;
     GLfloat		radius = 4.0f;
     GLfloat     speed = 1;
     glm::vec3   target = glm::vec3(0);

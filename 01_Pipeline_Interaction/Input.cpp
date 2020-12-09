@@ -2,9 +2,9 @@
 
 Input Input::instance;
 
-GLboolean* Input::GetKeyStatus()
+KeyStatus* Input::GetKeyStatus()
 {
-	return this->keyStatus;
+	return this->realKeyStatus;
 }
 
 glm::vec2 Input::GetMousePosition()
@@ -23,13 +23,30 @@ void Input::Start()
 
 void Input::Update()
 {
+	for (int i = 0; i != 1024; i++) {
+		if (realKeyStatus[i] == KeyStatus::RELEASED) {
+			realKeyStatus[i] = KeyStatus::UP;
+		}
+	}
 	glfwPollEvents();						// poll callbacks
 	PatchMouseDrift();
 }
 
 void Input::OnKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (action == GLFW_PRESS) keyStatus[key] = true;
-	else if (action == GLFW_RELEASE) keyStatus[key] = false;
+	if (action == GLFW_PRESS) {
+		keyStatus[key] = true;
+		realKeyStatus[key] = KeyStatus::PRESSED;
+	}
+	else if (action == GLFW_RELEASE) {
+		keyStatus[key] = false;
+		if (realKeyStatus[key] == KeyStatus::PRESSED) {
+			realKeyStatus[key] = KeyStatus::RELEASED;
+		}
+		else {
+			realKeyStatus[key] = KeyStatus::UP;
+		}
+	}
+
 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);

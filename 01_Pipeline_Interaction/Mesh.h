@@ -33,6 +33,7 @@ public:
 
 	virtual ~Mesh();
 protected:
+	bool outlined = false;
 	//Texture texture;
 private:
 	void operator=(const Mesh& mesh) {}
@@ -41,5 +42,9 @@ private:
 	std::string filename;
 
 	void InitMesh(const IndexedModel& model);
+
+public:
+    bool GetOutlined() const;
+    void SetOutlined(bool outlined);
 
 };

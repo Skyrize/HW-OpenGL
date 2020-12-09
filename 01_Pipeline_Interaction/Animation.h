@@ -3,6 +3,7 @@
 #include "AnimationClip.h"
 #include <vector>
 class Transform;
+
 class Animation :
     public Component
 {
@@ -15,7 +16,7 @@ public:
     Animation(Entity& parent);
     virtual void Start() override;
     virtual void Update() override;
-    void Play(const std::string& clipName);
+    void Play(const std::string& clipName, Callback callback = nullptr);
     void AddClip(const Clip& clip);
 };
 

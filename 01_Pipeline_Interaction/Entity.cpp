@@ -1,8 +1,12 @@
 #include "Entity.h"
 
-Entity::Entity()
+Entity::Entity(Entity *parent /*= nullptr*/)
+	: parent(parent)
 {
 	transform = new Transform(*this);
+	if (parent) {
+		parent->AddChild(this);
+	}
 }
 
 Entity::~Entity()
@@ -11,6 +15,21 @@ Entity::~Entity()
 	for (auto i = components.begin(); i != components.end(); i++) {
 		delete(i->second);
 	}
+}
+
+void Entity::AddChild(Entity* newChild)
+{
+	if (newChild->parent != this) {
+		newChild->parent = this;
+	}
+	childs.push_back(newChild);
+}
+
+Entity* Entity::GetChild(GLuint targetIndex)
+{
+	if (childs.size() < targetIndex)
+		throw ("Index out of bound");
+	return childs[targetIndex];
 }
 
 void Entity::Start()
@@ -25,7 +44,9 @@ void Entity::Update()
 {
 	for (auto comp : this->components)
 	{
-		comp.second->Update();
+		if (comp.second->IsActive()) {
+			comp.second->Update();
+		}
 	}
 }
 
@@ -57,5 +78,32 @@ Transform* Entity::GetTransform() const
 void Entity::SetTransform(Transform* transform)
 {
     this->transform = transform;
+}
+
+
+Entity* Entity::GetParent() const
+{
+    return parent;
+}
+
+void Entity::SetParent(Entity* parent)
+{
+    this->parent = parent;
+}
+
+std::vector<Entity*> Entity::GetChilds() const
+{
+    return childs;
+}
+
+
+std::string Entity::GetTag() const
+{
+    return tag;
+}
+
+void Entity::SetTag(std::string tag)
+{
+    this->tag = tag;
 }
 

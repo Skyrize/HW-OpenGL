@@ -12,12 +12,12 @@ void DebugController::Start()
 void DebugController::Update()
 {
 	glm::vec3 movement(0);
-	if (keyStatus[GLFW_KEY_I])		movement += transform->GetFront() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_K])		movement -= transform->GetFront() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_J])		movement -= transform->GetRight() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_L])		movement += transform->GetRight() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_U])	movement += transform->GetUp() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_O])		movement -= transform->GetUp() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_I] == KeyStatus::PRESSED)		movement += transform->GetFront() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_K] == KeyStatus::PRESSED)		movement -= transform->GetFront() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_J] == KeyStatus::PRESSED)		movement -= transform->GetRight() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_L] == KeyStatus::PRESSED)		movement += transform->GetRight() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_U] == KeyStatus::PRESSED)	movement += transform->GetUp() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_O] == KeyStatus::PRESSED)		movement -= transform->GetUp() * speed * Time::Get().GetDeltaTime();
 	//std::cout << "movement = " << VTS(movement) << std::endl;
 	transform->Translate(movement);
 

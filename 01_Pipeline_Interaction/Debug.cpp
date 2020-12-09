@@ -16,3 +16,8 @@ std::string MTS(glm::mat4 m)
 		+ "| " + std::to_string(m[2][0]) + " | " + std::to_string(m[2][1]) + " | " + std::to_string(m[2][2]) + " | " + std::to_string(m[2][3]) + " |\n"
 		+ "| " + std::to_string(m[3][0]) + " | " + std::to_string(m[3][1]) + " | " + std::to_string(m[3][2]) + " | " + std::to_string(m[3][3]) + " |\n";
 }
+
+glm::vec3 GetRandomDirection()
+{
+	return glm::normalize(glm::vec3(rand()/RAND_MAX, rand() / RAND_MAX, rand() / RAND_MAX));
+}

@@ -7,8 +7,9 @@ AnimationClip::AnimationClip(Transform* target, const Clip &clip)
 {
 }
 
-void AnimationClip::Reset()
+void AnimationClip::Reset(Callback callback)
 {
+	this->callback = callback;
 	this->currentTime = 0;
 	this->isDone = false;
 	target->SetPosition(clip.begin.GetPosition());
@@ -28,6 +29,8 @@ void AnimationClip::Play()
 		target->SetPosition(clip.end.GetPosition());
 		target->SetScale(clip.end.GetScale());
 		target->SetRotation(clip.end.GetRotation());
+		if (callback)
+			callback();
 	} else {
 		GLfloat delta = Time::Get().GetDeltaTime();
 		GLfloat t = currentTime / clip.length;

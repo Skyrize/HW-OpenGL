@@ -17,15 +17,11 @@ void SpotLight::Bind(GLuint index)
 	std::string i = "lights[" + std::to_string(index) + "].";
 
 
-	shader.SetUniform3f(i + "position", transform->GetPosition());
+	shader.SetUniform3f(i + "position", transform->GetWorldPosition());
 	shader.SetUniform3f(i + "direction", transform->GetFront());
-	//std::cout << "direction = " << VTS(transform->GetFront()) << std::endl;
-	//std::cout << "angle " << std::to_string(glm::radians(angle)) << std::endl;
 	shader.SetUniform1f(i + "innerAngle", glm::radians(innerAngle));
 	shader.SetUniform1f(i + "outerAngle", glm::radians(outerAngle));
 
-	std::cout << "innerAngle " << std::to_string(glm::radians(innerAngle)) << std::endl;
-	std::cout << "outerAngle " << std::to_string(glm::radians(outerAngle)) << std::endl;
 }
 
 

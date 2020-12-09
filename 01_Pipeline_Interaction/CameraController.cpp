@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "Input.h"
 #include "Time.h"
+#include "Engine.h"
+
 
 void CameraController::Start()
 {
@@ -13,15 +15,15 @@ void CameraController::Start()
 void CameraController::Update()
 {
 	glm::vec3 movement(0);
-	if (keyStatus[GLFW_KEY_W])		movement += transform->GetFront() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_S])		movement -= transform->GetFront() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_A])		movement -= transform->GetRight() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_D])		movement += transform->GetRight() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_SPACE])	movement += transform->GetUp() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_Q])		movement -= transform->GetUp() * speed * Time::Get().GetDeltaTime();
-	if (keyStatus[GLFW_KEY_F])			speed = glm::clamp(speed + 0.05f, 0.0f, 10.0f);
-	if (keyStatus[GLFW_KEY_G])			speed = glm::clamp(speed - 0.05f, 0.0f, 10.0f);
-	//std::cout << "movement = " << VTS(movement) << std::endl;
+
+	if (keyStatus[GLFW_KEY_W] == KeyStatus::PRESSED)		movement += transform->GetFront() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_S] == KeyStatus::PRESSED)		movement -= transform->GetFront() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_A] == KeyStatus::PRESSED)		movement -= transform->GetRight() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_D] == KeyStatus::PRESSED)		movement += transform->GetRight() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_SPACE] == KeyStatus::PRESSED)	movement += transform->GetUp() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_Q] == KeyStatus::PRESSED)		movement -= transform->GetUp() * speed * Time::Get().GetDeltaTime();
+	if (keyStatus[GLFW_KEY_F] == KeyStatus::PRESSED)			speed = glm::clamp(speed + 0.05f, 0.0f, 200.0f);
+	if (keyStatus[GLFW_KEY_G] == KeyStatus::PRESSED)			speed = glm::clamp(speed - 0.05f, 0.0f, 200.0f);
 	mainCamera->Move(movement);
 }
 

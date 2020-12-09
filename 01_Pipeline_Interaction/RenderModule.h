@@ -7,7 +7,7 @@
 #include <list>
 
 class RenderModule :
-    public IObject, public IRender
+    public IObject
 {
 protected:
 	GLFWwindow*				window = nullptr;											// Keep track of the window
@@ -27,7 +27,7 @@ public:
 	void End();
     virtual void Start() override;
     virtual void Update() override;
-	virtual void Draw() override;
+	virtual void Draw();
 	void Clear() const;
 
 	void Register(IRender* newRenderer);

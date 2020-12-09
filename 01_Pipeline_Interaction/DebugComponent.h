@@ -1,10 +1,11 @@
 #pragma once
 #include "Component.h"
+#include "Input.h"
 
 class DebugComponent : public Component
 {
 protected:
-    GLboolean* keyStatus = nullptr;
+    KeyStatus* keyStatus = nullptr;
     bool        isWireframe = false;
 public:
     DebugComponent(Entity& parent) : Component(parent) {};

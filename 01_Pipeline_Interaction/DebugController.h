@@ -1,10 +1,11 @@
 #pragma once
 #include "Component.h"
+#include "Input.h"
 class DebugController :
     public Component
 {
 private:
-	GLboolean* keyStatus = nullptr;
+	KeyStatus* keyStatus = nullptr;
 	GLfloat     speed = 3.5f;
 public:
 	DebugController(Entity& parent) : Component(parent) {};

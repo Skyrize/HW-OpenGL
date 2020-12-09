@@ -12,4 +12,5 @@
 std::string VTS(glm::vec3 v);
 std::string VTS(glm::vec2 v);
 std::string MTS(glm::mat4 m);
+glm::vec3 GetRandomDirection();
 

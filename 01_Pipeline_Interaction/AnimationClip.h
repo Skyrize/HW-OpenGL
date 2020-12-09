@@ -2,7 +2,10 @@
 #include <string>
 #include <glm/glm.hpp>
 #include "Transform.h"
+#include <functional>
 
+//typedef void (*Callback)();
+using Callback = std::function<void()>;
 struct Clip {
 	std::string name = "";
 	GLfloat length = 0;
@@ -23,9 +26,10 @@ protected:
 	Clip clip;
 	GLfloat currentTime = 0;
 	bool isDone = true;
+	Callback callback = nullptr;
 public:
-	AnimationClip(Transform* target, const Clip &clip);
-	void Reset();
+	AnimationClip(Transform* target, const Clip& clip);
+	void Reset(Callback callback);
 	void Play();
     std::string GetName() const;
 

@@ -24,10 +24,10 @@ public:
 	virtual void Start() override;
 	virtual void Update() override;
 
-	glm::mat4 GetModelMatrix();
-	glm::mat4 GetTranslationMatrix();
-	glm::mat4 GetRotationMatrix();
-	glm::mat4 GetScaleMatrix();
+	glm::mat4 GetModelMatrix() const;
+	glm::mat4 GetTranslationMatrix() const;
+	glm::mat4 GetRotationMatrix() const;
+	glm::mat4 GetScaleMatrix() const;
 	glm::vec3 GetRotationEuler();
 
 	void Translate(glm::vec3 translation);
@@ -35,13 +35,15 @@ public:
 	void Rotate(glm::vec3 euler);
 	void RotateAround(glm::vec3 point, glm::vec3 axis, GLfloat angle);
 public:
-    glm::vec3 GetPosition() const;
-    void SetPosition(glm::vec3 position);
+	glm::vec3 GetPosition() const;
+	glm::vec3 GetWorldPosition() const;
+	void SetPosition(glm::vec3 position);
+    void SetPosition(GLfloat x, GLfloat y, GLfloat z);
 
-    glm::vec3 GetScale() const;
+	glm::vec3 GetScale() const;
     void SetScale(glm::vec3 scale);
 
-    glm::quat GetRotation() const;
+	glm::quat GetRotation() const;
 	void SetRotation(glm::quat rotation);
 	void SetRotation(glm::vec3 eulerAngles);
 	void SetRotation(float eulerX, float eulerY, float eulerZ);

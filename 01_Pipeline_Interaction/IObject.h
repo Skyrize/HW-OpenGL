@@ -10,8 +10,12 @@ class IObject
 {
 protected:
 	std::string name = "";
+	bool isActive = true;
 public:
 	virtual void Start() = 0;
 	virtual void Update() = 0;
+
+	virtual bool IsActive() { return isActive; };
+	virtual void SetActive(bool value) { isActive = value; };
 };
 

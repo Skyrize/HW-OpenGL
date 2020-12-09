@@ -16,12 +16,12 @@ void Animation::Update()
 }
 
 
-void Animation::Play(const std::string& clipName)
+void Animation::Play(const std::string& clipName, Callback callback/* = nullptr*/)
 {
 	for (GLuint i = 0; i != clips.size(); i++) {
 		if (clips[i].GetName() == clipName) {
 			currentClipIndex = i;
-			clips[currentClipIndex].Reset();
+			clips[currentClipIndex].Reset(callback);
 			return;
 		}
 	}

@@ -39,6 +39,7 @@ uniform Material mat;
 
 uniform mat4 model_matrix;
 uniform vec4 viewPosition;
+uniform bool outlined = false;
 
 vec3 GetAmbient(vec3 color, float intensity)
 {
@@ -100,15 +101,6 @@ void main(void){
 		} else {
 			direction = normalize(vec4(lights[i].position, 1) - fs_in.fragPos);
 		}
-		
-//		float theta;
-//		if (lights[i].type == SPOT_LIGHT) {
-//			theta = dot(direction, normalize(vec4(-lights[i].direction, 0)));
-//			if (acos(theta) > lights[i].outerAngle) {
-//				color		= vec4(0, 0, 0, 1);
-//				continue;
-//			}
-//		}
 
 		vec3 ambient = GetAmbient(lights[i].color, lights[i].intensity);
 		vec3 diffuse = GetDiffuse(lights[i].color, lights[i].intensity, direction);
@@ -127,20 +119,30 @@ void main(void){
 			ambient *= attenuation;
 			diffuse *= attenuation;
 			specular *= attenuation;
+			
 		}
 		ambientTotal += ambient;
 		diffuseTotal += diffuse;
 		specularTotal += specular;
 
 	}
-//	ambientTotal *= vec3(texture(mat.ambient, fs_in.tc));
-//	diffuseTotal *= vec3(texture(mat.diffuse, fs_in.tc));
-//	specularTotal *= vec3(texture(mat.specular, fs_in.tc));
 	ambientTotal *= mat.ambient;
 	diffuseTotal *= mat.diffuse;
 	specularTotal *= mat.specular;
 	
 	vec4 light = vec4(ambientTotal + diffuseTotal + specularTotal, mat.transparency);
+	vec4 viewDir	= normalize(viewPosition - fs_in.fragPos);
 
-	color		= light * texture(mat.u_Texture, fs_in.tc);
+	if (outlined) {
+//		float nDot = dot(fs_in.normals, viewDir);
+//		if (nDot > 0.4) {
+//			color		= light * texture(mat.u_Texture, fs_in.tc);
+//		} else {
+
+			color		= light  * texture(mat.u_Texture, fs_in.tc) * vec4(1, 0.5, 0.5, 1);
+//		}
+	} else {
+			color		= light * texture(mat.u_Texture, fs_in.tc);
+	}
+
 }

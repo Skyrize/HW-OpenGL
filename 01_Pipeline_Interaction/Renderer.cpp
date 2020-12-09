@@ -2,7 +2,7 @@
 #include "RenderModule.h"
 
 Renderer::Renderer(Entity& parent)
-	: Component(parent)
+	: IRender(parent)
 {
 	RenderModule::Get().Register(this);
 }

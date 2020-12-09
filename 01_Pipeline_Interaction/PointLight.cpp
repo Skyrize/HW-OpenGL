@@ -14,5 +14,5 @@ void PointLight::Bind(GLuint index)
 	Shader& shader = RenderModule::Get().GetShader();
 	std::string i = "lights[" + std::to_string(index) + "].";
 
-	shader.SetUniform3f(i + "position", transform->GetPosition());
+	shader.SetUniform3f(i + "position", transform->GetWorldPosition());
 }

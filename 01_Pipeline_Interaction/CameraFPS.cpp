@@ -3,6 +3,7 @@
 #include "RenderModule.h"
 #include "Time.h"
 #include "Input.h"
+#include <math.h>
 
 void CameraFPS::Start()
 {
@@ -10,9 +11,11 @@ void CameraFPS::Start()
 	glfwSetInputMode(RenderModule::Get().GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	mainCamera = RenderModule::Get().GetMainCamera();
 	keyStatus = Input::Get().GetKeyStatus();
+	rotation = glm::vec3(-16.7, 138.7, 0);
+	//rotation.x = fmod(transform->GetRotationEuler().x, 90);
+	//rotation.y = fmod(transform->GetRotationEuler().y, 90);
 	/*rotation = transform->GetRotationEuler();
 	rotation.z = 0;*/
-	rotation = glm::vec3(0, 0, 0);
 }
 
 void CameraFPS::Update()
@@ -20,10 +23,9 @@ void CameraFPS::Update()
 	rotation.x += Input::Get().GetMouseInput().y * sensitivity * Time::Get().GetDeltaTime();
 	rotation.y -= Input::Get().GetMouseInput().x * sensitivity * Time::Get().GetDeltaTime();
 
-	// std::cout << "before rot" << VTS(rotation) << std::endl;
 	if (rotation.x > 89.0f) rotation.x = 89.0f;
 	if (rotation.x < -89.0f) rotation.x = -89.0f;
-
+	 std::cout << "before rot" << VTS(transform->GetPosition()) << std::endl;
 
 	transform->SetRotation(rotation);
 

@@ -8,7 +8,7 @@ void DebugComponent::Start()
 
 void DebugComponent::Update()
 {
-	if (keyStatus[GLFW_KEY_E]) {
+	if (keyStatus[GLFW_KEY_E] == KeyStatus::RELEASED) {
 		if (isWireframe) {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		} else {

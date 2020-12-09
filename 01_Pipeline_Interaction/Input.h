@@ -1,16 +1,25 @@
 #pragma once
 #include "IObject.h"
+
+enum class KeyStatus
+{
+	UP = 0,
+	PRESSED = 1,
+	RELEASED = 2,
+};
+
 class Input : public IObject
 {
 protected:
-	GLboolean				keyStatus[1024];
+	GLboolean				keyStatus[1024] = { 0 };
+	KeyStatus				realKeyStatus[1024] = { KeyStatus::UP };
 	glm::vec2				mousePosition = glm::vec2(0);
 	glm::vec2				lastMousePosition = glm::vec2(0);
 	glm::vec2				mouseInput = glm::vec2(0);
 	GLboolean				mouseMoved = false;
 public:
 	Input() {};
-	GLboolean* GetKeyStatus();
+	KeyStatus* GetKeyStatus();
 	glm::vec2 GetMousePosition();
 	glm::vec2 GetMouseInput();
 

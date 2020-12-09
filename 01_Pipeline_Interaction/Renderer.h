@@ -9,7 +9,7 @@
 #include "Material.h"
 
 class Renderer :
-    public Component, public IRender
+   public IRender
 {
 protected:
 	//static const unsigned int NUM_BUFFERS = 4;

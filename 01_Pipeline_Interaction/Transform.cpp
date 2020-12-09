@@ -39,26 +39,31 @@ void Transform::Update()
 {
 }
 
-glm::mat4 Transform::GetModelMatrix()
+glm::mat4 Transform::GetModelMatrix() const
 {
+    glm::mat4 parentMatrix(1);
     glm::mat4 modelMatrix = GetTranslationMatrix();
     modelMatrix *= GetRotationMatrix();
     modelMatrix *= GetScaleMatrix();
 
-	return modelMatrix;
+    if (parent.GetParent()) {
+        parentMatrix = parent.GetParent()->GetTransform()->GetModelMatrix();
+    }
+
+	return parentMatrix * modelMatrix;
 }
 
-glm::mat4 Transform::GetTranslationMatrix()
+glm::mat4 Transform::GetTranslationMatrix() const
 {
     return glm::translate(glm::mat4(1), this->position);
 }
 
-glm::mat4 Transform::GetRotationMatrix()
+glm::mat4 Transform::GetRotationMatrix() const
 {
 	return glm::toMat4(this->rotation);
 }
 
-glm::mat4 Transform::GetScaleMatrix()
+glm::mat4 Transform::GetScaleMatrix() const
 {
     return glm::scale(glm::mat4(1), this->scale);
 }
@@ -110,11 +115,24 @@ void Transform::RotateAround(glm::vec3 point, glm::vec3 axis, GLfloat angle)
 glm::vec3 Transform::GetPosition() const
 {
     return position;
-} 
+}
+glm::vec3 Transform::GetWorldPosition() const
+{
+    glm::mat4 modelMatrix = GetModelMatrix();
+    glm::vec3 worldPosition(modelMatrix[3]);
+
+    return worldPosition;
+}
+
 
 void Transform::SetPosition(glm::vec3 position)
 {
     this->position = position;
+}
+
+void Transform::SetPosition(GLfloat x, GLfloat y, GLfloat z)
+{
+    this->position = glm::vec3(x, y, z);
 }
 
 glm::vec3 Transform::GetScale() const

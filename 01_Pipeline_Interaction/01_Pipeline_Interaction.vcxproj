@@ -149,6 +149,7 @@
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="AnimationClip.cpp" />
     <ClCompile Include="DebugController.cpp" />
+    <ClCompile Include="Manipulate.cpp" />
     <ClCompile Include="OrbitalMove.cpp" />
     <ClCompile Include="CameraFPS.cpp" />
     <ClCompile Include="LookAtTarget.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="RenderModule.cpp" />
+    <ClCompile Include="SceneController.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="GLBind.cpp" />
@@ -186,6 +188,7 @@
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="DebugController.h" />
+    <ClInclude Include="Manipulate.h" />
     <ClInclude Include="OrbitalMove.h" />
     <ClInclude Include="CameraFPS.h" />
     <ClInclude Include="LookAtTarget.h" />
@@ -208,6 +211,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="RenderModule.h" />
+    <ClInclude Include="SceneController.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Texture.h" />
