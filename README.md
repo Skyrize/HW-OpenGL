@@ -1,4 +1,7 @@
 # Inputs
+
+[Link to my video presentation & explainations on YouTube](https://www.youtube.com/watch?v=Dqf-v3bJA34)
+
 ## General
 - F : Toggle directionnal Light
 - G : Toggle point Light
@@ -24,5 +27,8 @@
 - Space : Go back in Focus Mode
 
 # Maya Render 
+
+I also made a render of my scene in Maya using Arnold
+
 ![Render](https://github.com/Skyrize/HW_OpenGL/blob/main/render.png)
 
